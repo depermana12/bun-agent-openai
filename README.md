@@ -5,7 +5,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/bun-agent-openai.git
+   git clone https://github.com/depermana12/bun-agent-openai.git
    cd bun-agent-openai
    ```
 
