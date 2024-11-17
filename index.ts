@@ -1,5 +1,5 @@
-import { runLLm } from "./src/llm";
-import { message } from "./src/db";
+import { z } from "zod";
+import { runAgent } from "./src/agent";
 
 const userPrompt = Bun.argv[2];
 if (!userPrompt) {
@@ -7,13 +7,12 @@ if (!userPrompt) {
   process.exit(1);
 }
 
-message.push([{ role: "user", content: userPrompt }]);
-const messagesHistory = message.pull();
+const weatherTool = {
+  name: "get_weater",
+  description: "use this tool to get the weather",
+  parameters: z.object({}),
+};
 
-const response = await runLLm({
-  messages: messagesHistory,
-});
-
-message.push([{ role: "assistant", content: response }]);
+const response = await runAgent({ userPrompt, tools: [weatherTool] });
 
 console.log(response);
